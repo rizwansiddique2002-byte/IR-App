@@ -1,0 +1,24 @@
+name: Build Android APK
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build with Buildozer
+        uses: ArtemSerebrennkov/buildozer-action@v1
+        with:
+          buildozer_version: master
+          python_version: 3.10
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: IR_Interpreter_App
+          path: bin/*.apk
